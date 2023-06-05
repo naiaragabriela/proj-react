@@ -1,1 +1,1 @@
-![react](https://github.com/naiaragabriela/proj-react/assets/126898837/7d387ebc-ed8a-45a5-841f-e7f44c748b2d)
+![react](https://github.com/naiaragabriela/proj-react/assets/126898837/794ab704-edbb-497a-9e1c-1e146c44eb4d)
