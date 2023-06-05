@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jestc --passWithNoTests",
+    "test:watch": "npm teste -- --watch",
+    "test:staged": "npm teste -- --findRelatedTests",
+    "test:ci": "npm teste -- --coverage"
   },
   "author": "",
   "license": "ISC",
