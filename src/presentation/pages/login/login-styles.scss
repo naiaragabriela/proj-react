@@ -14,10 +14,12 @@ body {
 
 input[type="password"],
 input[type="email"] {
+    margin-top: 16px;
     border: 1px solid $primaryLight;
     line-height: 40px;
     border-radius: 4px;
     padding: 0px 40px 0px 8px;
+    width: 320px;
    
     
     &:focus {
@@ -64,24 +66,6 @@ button {
     
     button {
       margin-top: 32px;
-    }
-  }
-
-  .inputWrap {
-    margin-top: 16px;
-    display: flex;
-    position: relative;
-    align-items: center; 
-
-    input {
-      flex-grow: 1;
-    } 
-
-    .status {
-      position: absolute;
-      right: 8px;
-      font-size: 22px;
-
     }
   }
   
