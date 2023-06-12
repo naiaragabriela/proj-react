@@ -51,6 +51,16 @@ describe ('Login Component', () => {
     expect(passwordStatus.title).toBe(ValidationStub.errorMessage)
     expect(passwordStatus.textContent).toBe('.')
   })
+
+  test ('Should show valid email state if Validation succeeds', () => {
+    const { sut, ValidationStub } = makeSut() 
+    ValidationStub.errorMessage = null
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(emailInput,{ target: { value: faker.internet.email() } })
+    const emailStatus = sut.getByTestId('email-status')
+    expect(emailStatus.title).toBe('Ok')
+    expect(emailStatus.textContent).toBe('')
+  })
   test ('Should show valid password state if Validation succeeds', () => {
     const { sut, ValidationStub } = makeSut() 
     ValidationStub.errorMessage = null
