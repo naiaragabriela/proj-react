@@ -43,6 +43,7 @@ describe ('Login Component', () => {
     expect(emailStatus.title).toBe(ValidationStub.errorMessage)
     expect(emailStatus.textContent).toBe('.')
   })
+
   test ('Should show password error if Validation fails', () => {
     const { sut, ValidationStub } = makeSut() 
     const passwordInput = sut.getByTestId('password')
@@ -61,6 +62,7 @@ describe ('Login Component', () => {
     expect(emailStatus.title).toBe('Ok')
     expect(emailStatus.textContent).toBe('')
   })
+
   test ('Should show valid password state if Validation succeeds', () => {
     const { sut, ValidationStub } = makeSut() 
     ValidationStub.errorMessage = null
@@ -69,5 +71,16 @@ describe ('Login Component', () => {
     const passwordStatus = sut.getByTestId('password-status')
     expect(passwordStatus.title).toBe('Ok')
     expect(passwordStatus.textContent).toBe('')
+  })
+
+  test ('Should enable submit button if form is valid', () => {
+    const { sut, ValidationStub } = makeSut() 
+    ValidationStub.errorMessage = null
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(emailInput,{ target: { value: faker.internet.email() } })
+    const passwordInput = sut.getByTestId('password')
+    fireEvent.input(passwordInput,{ target: { value: faker.internet.password() } })
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+    expect(submitButton.disabled).toBe(false)
   })
 }) 
