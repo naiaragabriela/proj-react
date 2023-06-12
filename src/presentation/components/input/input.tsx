@@ -11,7 +11,7 @@ const Input: React.FC<Props> = (props: Props) => {
     event.target.readOnly = false
   }
   const getStatus = (): string => {
-    return 'invalid'
+    return '.'
   }
   const getTitle = (): string => {
     return error
