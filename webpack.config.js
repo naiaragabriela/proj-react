@@ -52,7 +52,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new DefinePlugin({
-         'process.env.API_URL': 'url'   
+         'process.env.API_URL': JSON.stringify('url API') 
         })
     ]
 }
