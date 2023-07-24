@@ -29,21 +29,28 @@ const makeSut = (params?: SutParams): SutTypes => {
 describe ('SignUp Component', () => {
     afterEach(cleanup)
 
-    test ('Should start with initial state', () => {
-      const validationError = faker.random.words()
-      const { sut } = makeSut({validationError})
-      Helper.testChildCount(sut, 'error-wrap', 0)
-      Helper.testButtonIsDisabled(sut, 'submit', true)
-      Helper.testStatusForField(sut, 'name', validationError)
-      Helper.testStatusForField(sut, 'email', 'Campo Obrigatório')
-      Helper.testStatusForField(sut, 'password', 'Campo Obrigatório')
-      Helper.testStatusForField(sut, 'passwordConfirmation', 'Campo Obrigatório')
-   })
+  test ('Should start with initial state', () => {
+    const validationError = faker.random.words()
+    const { sut } = makeSut({validationError})
+    Helper.testChildCount(sut, 'error-wrap', 0)
+    Helper.testButtonIsDisabled(sut, 'submit', true)
+    Helper.testStatusForField(sut, 'name', validationError)
+    Helper.testStatusForField(sut, 'email', validationError)
+    Helper.testStatusForField(sut, 'password', 'Campo Obrigatório')
+    Helper.testStatusForField(sut, 'passwordConfirmation', 'Campo Obrigatório')
+  })
 
-   test ('Should show name error if Validation fails', () => {
+  test ('Should show name error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({validationError})
     Helper.populateField(sut, 'name')
     Helper.testStatusForField(sut, 'name', validationError)
+  })
+
+  test ('Should show email error if Validation fails', () => {
+    const validationError = faker.random.words()
+    const { sut } = makeSut({validationError})
+    Helper.populateField(sut, 'email')
+    Helper.testStatusForField(sut, 'email', validationError)
   })
 })
