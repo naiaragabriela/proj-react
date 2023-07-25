@@ -9,14 +9,14 @@ type Props = {
 
 
 const Router: React.FC<Props> = ({makeLogin}: Props) => {
-    return (
-      <BrowserRouter>
-        <Switch>
-            <Route path="/login" exact component={makeLogin} />
-            <Route path="/signup" exact component={SignUp} />
-        </Switch>
-      </BrowserRouter>
-    )
-   }
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/login" exact component={makeLogin} />
+        <Route path="/signup" exact component={SignUp} />
+      </Switch>
+    </BrowserRouter>
+  )
+}
    
-   export default Router
+export default Router
