@@ -4,7 +4,7 @@ import { makeRemoteAuthentication } from '@/main/factories/usecases/authenticati
 import { makeLocalSaveAccessToken } from '@/main/factories/usecases/save-accesstoken/local-save-access-token-factory'
 import { Login } from '@/presentation/pages'
 
-export const makelogin: React.FC = () => {
+export const makeLogin: React.FC = () => {
   return (
     <Login 
     authentication={makeRemoteAuthentication()} 
