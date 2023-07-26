@@ -18,5 +18,8 @@
     "allowJs": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "src/main/test/cypress"
+  ]
 }
