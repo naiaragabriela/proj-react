@@ -1,24 +1,22 @@
 {
-    "compilerOptions": {
-      "target": "es5",
-      "lib": [
-        "dom",
-        "dom.iterable",
-        "esnext"
-      ],
-      "esModuleInterop": true,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "jsx": "react",
-      "rootDir": "src",
-      "baseUrl": "src",
-      "paths": {
-        "@/*": ["*"]
-      },
-      "allowJs": true,
-      "resolveJsonModule": true,
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "rootDirs": ["src"],
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
     },
-    "include": [
-        "src"
-    ]
-  }
+    "allowJs": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.ts"]
+}
