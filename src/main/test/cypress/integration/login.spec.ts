@@ -62,6 +62,10 @@ describe('Login', () => {
   })
 
   
+  it('Should not call submit if form is invalid', () => {
+    cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+  })
+
   it('Should present multiple submits', () => {
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
