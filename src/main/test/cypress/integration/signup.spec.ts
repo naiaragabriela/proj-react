@@ -3,13 +3,17 @@ import * as Http from '../support/signup-mocks'
 import { testInputStatus, testMainError, testUrl } from "../support/form-helper"
 
 
-const simulateValidSubmit = (): void => {
+const populateFields = (): void => {
     cy.getByTestId('name').focus().type(faker.name.findName())
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     const password = faker.random.alphaNumeric(7)
     cy.getByTestId('password').focus().type(password)
     cy.getByTestId('passwordConfirmation').focus().type(password)
+}
+
+const simulateValidSubmit = (): void => {
+    populateFields()
     cy.getByTestId('submit').click()
 }
 
@@ -85,5 +89,12 @@ describe('SignUp', () => {
         cy.getByTestId('error-wrap').should('not.have.descendants')
         testUrl('/signup')//no curso está usando sem o signup
         //testLocalStorage('accessToken')
+    })
+
+    it('Should prevent multiple submits', () => {
+        Http.mockOk()
+        populateFields()
+        cy.getByTestId('submit').dblclick()
+         //testHttpCallsCount(1)
     })
 })
