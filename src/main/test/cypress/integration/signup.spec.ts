@@ -1,5 +1,17 @@
 import faker from "faker"
-import { testInputStatus } from "../support/form-helper"
+import * as Http from '../support/signup-mocks'
+import { testInputStatus, testMainError, testUrl } from "../support/form-helper"
+
+
+const simulateValidSubmit = (): void => {
+    cy.getByTestId('name').focus().type(faker.name.findName())
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    const password = faker.random.alphaNumeric(7)
+    cy.getByTestId('password').focus().type(password)
+    cy.getByTestId('passwordConfirmation').focus().type(password)
+    cy.getByTestId('submit').click()
+}
 
 describe('SignUp', () => {
     beforeEach(() => {
@@ -30,9 +42,9 @@ describe('SignUp', () => {
         testInputStatus('passwordConfirmation', 'Valor inválido')
         cy.getByTestId('submit').should('have.attr', 'disabled') 
         cy.getByTestId('error-wrap').should('not.have.descendants') 
-      })
+    })
     
-      it('Should present valid state if form is valid', () => {
+    it('Should present valid state if form is valid', () => {
         cy.getByTestId('name').focus().type(faker.name.findName())
         testInputStatus('name')
         cy.getByTestId('email').focus().type(faker.internet.email())
@@ -44,6 +56,12 @@ describe('SignUp', () => {
         testInputStatus('passwordConfirmation')
         cy.getByTestId('submit').should('not.have.attr', 'disabled') 
         cy.getByTestId('error-wrap').should('not.have.descendants') 
-      })
+    })
 
+    it('Should present EmailInUseError on 403', () => {
+        Http.mockEmailInUseError()
+        simulateValidSubmit()
+        testMainError('Algo de errado aconteceu. Tente novamente em breve')
+        testUrl('/signup')
+    })
 })
