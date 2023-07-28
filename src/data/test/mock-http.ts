@@ -1,4 +1,4 @@
-import { HttpPostClient, HttpPostParams, HttpResponse, HttpStatusCode } from '@/data/protocols/http'
+import { HttpGetClient, HttpPostClient, HttpPostParams, HttpResponse, HttpStatusCode, HtttpGetParams } from '@/data/protocols/http'
 import faker from 'faker'
 
 export const mockPostRequest = (): HttpPostParams => ({
@@ -19,4 +19,13 @@ export class HttpPostClientSpy<R> implements HttpPostClient<R> {
     this.body = params.body
     return Promise.resolve(this.response)
   }
+}
+
+
+export class HttpGetClientSpy implements HttpGetClient {
+  url: string
+
+ async get (params: HtttpGetParams): Promise<void> {
+  this.url = params.url
+ }
 }
