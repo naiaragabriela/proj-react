@@ -14,7 +14,7 @@ export class HttpPostClientSpy<R> implements HttpPostClient<R> {
   url?: string
   body?: any
   response: HttpResponse<R> = {
-    statusCode: HttpStatusCode.ok
+  statusCode: HttpStatusCode.ok
   }
 
   async post (params: HttpPostParams): Promise<HttpResponse<R>> {
@@ -27,7 +27,7 @@ export class HttpPostClientSpy<R> implements HttpPostClient<R> {
 
 export class HttpGetClientSpy<R> implements HttpGetClient<R> {
   url: string
-  response: HttpResponse<R> = {
+    response: HttpResponse<R> = {
     statusCode: HttpStatusCode.ok
   }
 
