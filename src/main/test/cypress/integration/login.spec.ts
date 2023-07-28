@@ -1,5 +1,5 @@
 import { testInputStatus, testMainError, testUrl } from '../support/form-helper'
-import * as Http from './login-mocks'
+import * as Http from '../support/login-mocks'
 import faker from 'faker'
 
 
@@ -70,7 +70,7 @@ describe('Login', () => {
     simulateValidSubmit()
     cy.getByTestId('error-wrap').should('not.have.descendants')
     testUrl('/login')//no curso está usando sem o login
-    //cy.window().then(window => assert.isOk(window.localStorage.getItem('accessToken')))
+    //testLocalStorage('accessToken')
   })
 
   it('Should prevent multiple submits', () => {
