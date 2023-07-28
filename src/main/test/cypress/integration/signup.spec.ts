@@ -64,4 +64,11 @@ describe('SignUp', () => {
         testMainError('Algo de errado aconteceu. Tente novamente em breve')
         testUrl('/signup')
     })
+
+    it('Should present UnexpectedError on default error cases', () => {
+        Http.mockUnexpectedError()
+        simulateValidSubmit()
+        testMainError('Algo de errado aconteceu. Tente novamente em breve')
+        testUrl('/signup')
+      })
 })
