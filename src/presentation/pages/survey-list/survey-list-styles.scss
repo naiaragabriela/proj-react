@@ -79,10 +79,12 @@
                     font-size: 40px;
                     font-weight: bold;
                   }
+
                   .month {
                     text-transform: lowercase;
                     margin: 0px 0px 5px;
                   }
+                  
                   .year {
                     font-size: 16px;
                   }
@@ -92,7 +94,7 @@
                   font-size: 18px;
                   margin: 24px;
                   align-self: center;
-
+                  flex-grow: 1;
                 }
               }
 
@@ -111,6 +113,19 @@
               }
             }
         }
-
     }
+}
+
+@media only screen and (max-width: 600px) {
+  .surveyListWrap {
+    .contentWrap {
+      ul {
+        flex-direction: column;
+
+        li {
+          flex-basis: 100%;
+        }
+      }
+    }
+  }
 }
