@@ -71,7 +71,7 @@ describe('Login', () => {
     simulateValidSubmit()
     cy.getByTestId('error-wrap').should('not.have.descendants')
     testUrl('/login')//no curso está usando sem o login
-    //testLocalStorage('accessToken')
+    //testLocalStorage('account')
   })
 
   it('Should prevent multiple submits', () => {

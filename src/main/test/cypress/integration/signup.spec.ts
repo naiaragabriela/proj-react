@@ -88,7 +88,7 @@ describe('SignUp', () => {
         simulateValidSubmit()
         cy.getByTestId('error-wrap').should('not.have.descendants')
         testUrl('/signup')//no curso está usando sem o signup
-        //testLocalStorage('accessToken')
+        //testLocalStorage('account')
     })
 
     it('Should prevent multiple submits', () => {
