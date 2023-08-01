@@ -1,4 +1,4 @@
-import Styles from './survey-item-styles.scss'
+import Styles from './item-styles.scss'
 import { IconName, Icon } from '../../../../components'
 import React from 'react'
 import { SurveyModel } from '../../../../../domain/models'

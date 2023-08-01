@@ -1,4 +1,4 @@
-import { SurveyItem } from '../../../../pages/survey-list/components'
+import { SurveyItem } from '..'
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { mockSurveyModel } from '../../../../../domain/test'
