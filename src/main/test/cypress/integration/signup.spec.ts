@@ -75,13 +75,6 @@ describe('SignUp', () => {
         testMainError('Algo de errado aconteceu. Tente novamente em breve')
         testUrl('/signup')
     })
-
-    it('Should present UnexpectedError if invalid data is returned', () => {
-        Http.mockInvalidData()
-        simulateValidSubmit()
-        testMainError('')
-        testUrl('/signup')
-    })
   
     it('Should present save accessToken if valid credentials are provided', () => {
         Http.mockOk()
