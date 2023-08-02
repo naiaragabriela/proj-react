@@ -1,16 +1,13 @@
 import { Authentication } from '@/domain/usecases'
-import { AccountModel } from '../../domain/models'
 import faker from 'faker'
+import { mockAccountModel } from './mock-account'
 
 export const mockAuthenticationParams = (): Authentication.Params => ({
   email: faker.internet.email(),
   password: faker.internet.password()
 })
 
-export const mockAuthenticationModel = (): AccountModel => ({
-  accessToken: faker.datatype.uuid(),
-  name: faker.name.findName()
-})
+export const mockAuthenticationModel = (): Authentication.Model => mockAccountModel()
 
 export class AuthenticationSpy implements Authentication {
   account = mockAuthenticationModel()
