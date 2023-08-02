@@ -1,6 +1,11 @@
 import faker from "faker"
-import * as Http from '../support/signup-mocks'
-import { testInputStatus, testMainError, testUrl } from "../support/form-helper"
+import * as Http from '../utils/http-mocks'
+import { testInputStatus, testMainError, testUrl } from "../utils/form-helper"
+
+const path = /signup/
+const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'POST')
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+const mockSuccess = (): void => Http.mockOk(path, 'POST', 'fx:account')
 
 
 const populateFields = (): void => {
@@ -63,21 +68,21 @@ describe('SignUp', () => {
     })
 
     it('Should present EmailInUseError on 403', () => {
-        Http.mockEmailInUseError()
+        mockEmailInUseError()
         simulateValidSubmit()
         testMainError('Algo de errado aconteceu. Tente novamente em breve')
         testUrl('/signup')
     })
 
     it('Should present UnexpectedError on default error cases', () => {
-        Http.mockUnexpectedError()
+        mockUnexpectedError()
         simulateValidSubmit()
         testMainError('Algo de errado aconteceu. Tente novamente em breve')
         testUrl('/signup')
     })
   
     it('Should present save accessToken if valid credentials are provided', () => {
-        Http.mockOk()
+        mockSuccess()
         simulateValidSubmit()
         cy.getByTestId('error-wrap').should('not.have.descendants')
         testUrl('/signup')//no curso está usando sem o signup
@@ -85,14 +90,14 @@ describe('SignUp', () => {
     })
 
     it('Should prevent multiple submits', () => {
-        Http.mockOk()
+        mockSuccess()
         populateFields()
         cy.getByTestId('submit').dblclick()
          //testHttpCallsCount(1)
     })
 
     it('Should not call submit if form is invalid', () => {
-        Http.mockOk()
+        mockSuccess()
         cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
         //testHttpCallsCount(0)
     })
