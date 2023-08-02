@@ -11,12 +11,20 @@ describe('SurveyList', () => {
     cy.visit('')
   })
 
-  it('Should present error on Unexpectederror', () => {
+  it('Should present error on UnexpectedError', () => {
     Http.mockUnexpectedError()
     cy.getByTestId('error').should(
       'contain.text', 
       'Algo de errado aconteceu. Tente novamente em breve'
     )
   })
+
+  it('Should logout on AccessDeniederror', () => {
+    Http.mockAccessDeniedError()
+    testUrl('/')//no curso aqui usa o /login
+  })
+
+
+
 })
       

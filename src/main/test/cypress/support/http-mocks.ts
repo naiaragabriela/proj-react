@@ -14,7 +14,7 @@ export const mockUnauthorizedError = (url: RegExp,): void => {
     }).as('request')
 }
 
-export const mockForbidenError = (url: RegExp,method: string): void => {
+export const mockForbiddenError = (url: RegExp,method: string): void => {
     cy.intercept({
         method,
         url,
