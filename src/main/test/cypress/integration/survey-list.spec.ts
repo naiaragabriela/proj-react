@@ -1,6 +1,6 @@
 import faker from "faker"
 import * as Http from '../support/survey-list-mocks'
-import { setLocalStorageItem, testUrl } from "../support/form-helper"
+import { getLocalStorageItem, setLocalStorageItem, testUrl } from "../support/form-helper"
 
 describe('SurveyList', () => {
   beforeEach(() => {
@@ -23,7 +23,12 @@ describe('SurveyList', () => {
     Http.mockAccessDeniedError()
     testUrl('/')//no curso aqui usa o /login
   })
-
+  
+  it('Should present correct username', () => {
+    Http.mockUnexpectedError()
+    const { name } = getLocalStorageItem('account')
+    cy.getByTestId('username').should('contain.text', name)
+  })
 
 
 })
