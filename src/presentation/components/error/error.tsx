@@ -1,5 +1,4 @@
 import Styles from './error-styles.scss'
-import { SurveyContext } from '../../pages/survey-list/components'
 import React from 'react'
 
 type Props = {
