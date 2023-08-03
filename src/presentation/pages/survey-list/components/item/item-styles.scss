@@ -31,20 +31,10 @@
         right: -10px;
       }
 
-      time {
-        display: flex;
-        flex-direction: column;
-        background-color: $primaryLight;
-        color: $white;
-        border-radius: 8px;
+      .calendarWrap {
         margin-left: 24px;
         align-self: center;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 100px;
-        flex-shrink: 0;
-
+        
         .day {
           font-size: 40px;
           font-weight: bold;
