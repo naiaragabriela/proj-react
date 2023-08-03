@@ -1,10 +1,11 @@
 {
   "name": "proj-react",
   "version": "1.6.0",
-  "description": "",
+  "description": "API using TDD, Clena Architecture and Typescript",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "dev": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
