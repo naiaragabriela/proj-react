@@ -1,10 +1,10 @@
 import Styles from './result-styles.scss'
 import { Calendar } from '../../../../components'
+import { SurveyResultAnswer } from '..'
 import FlipMove from 'react-flip-move'
 import { useHistory } from 'react-router-dom'
 import { LoadSurveyResult } from '../../../../../domain/usecases'
 import React from 'react'
-import { SurveyResultAnswer } from '..'
 
 type Props = {
     surveyResult: LoadSurveyResult.Model
