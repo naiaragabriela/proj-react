@@ -1,13 +1,11 @@
 import React from 'react'
-import { SurveyResult } from '../../../../presentation/pages' 
-import { makeRemoteLoadSurveyResult } from '../../usecases'
-import { useParams } from 'react-router-dom'
+import { SurveyList } from '../../../../presentation/pages' 
+import { makeRemoteLoadSurveyList } from '../../usecases'
 
-export const makeSurveyResult: React.FC = () => {
-  const { id } = useParams<{ id: string }>()
+export const makeSurveyList: React.FC = () => {
   return (
-    <SurveyResult 
-    loadSurveyResult={makeRemoteLoadSurveyResult(id)} 
+    <SurveyList 
+    loadSurveyList={makeRemoteLoadSurveyList()} 
     />
   )
 }
