@@ -4,21 +4,21 @@ import { Calendar, Loading , Error} from '@/presentation/components'
 import { LoadSurveyResult } from '@/domain/usecases'
 import Styles from './survey-result-styles.scss'
 import FlipMove from 'react-flip-move'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 
 type Props = {
   loadSurveyResult: LoadSurveyResult
 }
 
 const SurveyResult: React.FC<Props>= ({ loadSurveyResult }: Props) => {
-  const [state] = useState({
+  const [state, setState] = useState({
     isLoading: false,
     error: '',
     surveyResult: null as LoadSurveyResult.Model
   })
   useEffect(() => {
     loadSurveyResult.load()
-    .then()
+    .then(surveyResult => setState(state => ({ ...state, surveyResult })))
     .catch()
   }, [])
 
@@ -29,25 +29,21 @@ const SurveyResult: React.FC<Props>= ({ loadSurveyResult }: Props) => {
           { state.surveyResult && 
             <>
               <hgroup> 
-                <Calendar date={new Date()} className={Styles.calendarWrap} />
-                <h2>Pergunta: qual seu framework favorito? </h2>
+                <Calendar date={state.surveyResult.date} className={Styles.calendarWrap} />
+                <h2 data-testid="question">{state.surveyResult.question}</h2>
               </hgroup>
-              <FlipMove className={Styles.answerList}>
-                <li>
-                  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freecodecamp.org%2Fportuguese%2Fnews%2Freact-js-para-iniciantes-props-e-state-explicados%2F&psig=AOvVaw0ItCi48mPTl3U-Df1vFIic&ust=1691169488728000&source=images&cd=vfe&opi=89978449&ved=0CA4QjRxqFwoTCKjM47r_wIADFQAAAAAdAAAAABAw" />
-                  <span className={Styles.answer}>Resposta: React</span>
-                  <span className={Styles.percent}>50%</span>
+              <FlipMove data-testid="answers" className={Styles.answerList}>
+                {state.surveyResult.answers.map(answer => 
+                <li 
+                data-testid="answer-wrap" 
+                key={answer.answer} 
+                className={answer.isCurrentAccountAnswer ? Styles.active : ''}
+                >
+                  {answer.image && <img data-testid="image" src={answer.image} alt={answer.answer} />}
+                  <span data-testid="answer" className={Styles.answer}>{answer.answer}</span>
+                  <span data-testid="percent" className={Styles.percent}>{answer.percent}</span>
                 </li>
-                <li className={Styles.active}>
-                  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freecodecamp.org%2Fportuguese%2Fnews%2Freact-js-para-iniciantes-props-e-state-explicados%2F&psig=AOvVaw0ItCi48mPTl3U-Df1vFIic&ust=1691169488728000&source=images&cd=vfe&opi=89978449&ved=0CA4QjRxqFwoTCKjM47r_wIADFQAAAAAdAAAAABAw" />
-                  <span className={Styles.answer}>Resposta: React</span>
-                  <span className={Styles.percent}>50%</span>
-                </li>
-                <li className={Styles.active}>
-                  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freecodecamp.org%2Fportuguese%2Fnews%2Freact-js-para-iniciantes-props-e-state-explicados%2F&psig=AOvVaw0ItCi48mPTl3U-Df1vFIic&ust=1691169488728000&source=images&cd=vfe&opi=89978449&ved=0CA4QjRxqFwoTCKjM47r_wIADFQAAAAAdAAAAABAw" />
-                  <span className={Styles.answer}>Resposta: React</span>
-                  <span className={Styles.percent}>50%</span>
-                </li>
+                )}
               </FlipMove>
               <button>Voltar</button> 
             </>
@@ -61,3 +57,18 @@ const SurveyResult: React.FC<Props>= ({ loadSurveyResult }: Props) => {
 }
 
 export default SurveyResult
+
+
+
+/*
+ <li className={Styles.active}>
+                  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freecodecamp.org%2Fportuguese%2Fnews%2Freact-js-para-iniciantes-props-e-state-explicados%2F&psig=AOvVaw0ItCi48mPTl3U-Df1vFIic&ust=1691169488728000&source=images&cd=vfe&opi=89978449&ved=0CA4QjRxqFwoTCKjM47r_wIADFQAAAAAdAAAAABAw" />
+                  <span className={Styles.answer}>Resposta: React</span>
+                  <span className={Styles.percent}>50%</span>
+                </li>
+                <li className={Styles.active}>
+                  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freecodecamp.org%2Fportuguese%2Fnews%2Freact-js-para-iniciantes-props-e-state-explicados%2F&psig=AOvVaw0ItCi48mPTl3U-Df1vFIic&ust=1691169488728000&source=images&cd=vfe&opi=89978449&ved=0CA4QjRxqFwoTCKjM47r_wIADFQAAAAAdAAAAABAw" />
+                  <span className={Styles.answer}>Resposta: React</span>
+                  <span className={Styles.percent}>50%</span>
+                </li>
+*/
