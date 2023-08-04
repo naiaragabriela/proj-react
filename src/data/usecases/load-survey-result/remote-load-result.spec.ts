@@ -67,10 +67,10 @@ describe('RemoteLoadSurveyResult', () => {
         }
         const httpResponse = await sut.load()
         const expectedDate = new Date(httpResult.date)
-        expect(httpResponse).toEqual([{
+        expect(httpResponse).toEqual({
             question: httpResult.question,
             answers: httpResult.answers,
             date: expectedDate
-        }])
+        })
     })
 })
