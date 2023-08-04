@@ -3,14 +3,15 @@ import SurveyResult from './survey-result';
 import { LoadSurveyResultSpy, mockAccountModel, mockSurveyResultModel } from '../../../domain/test'
 import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
+import { UnexpectedError } from '../../../domain/errors';
 
 type SutTypes = {
     loadSurveyResultSpy: LoadSurveyResultSpy
 }
 
-const makeSut = (surveyResult = mockSurveyResultModel()): SutTypes => {
-    const loadSurveyResultSpy = new LoadSurveyResultSpy()
-    loadSurveyResultSpy.surveyResult = surveyResult
+const makeSut = (loadSurveyResultSpy = new LoadSurveyResultSpy()): SutTypes => {
+
+    
     render(
         <ApiContext.Provider value={{ 
           setCurrentAccount: jest.fn(), 
@@ -38,10 +39,12 @@ describe('SurveyResult Component', () => {
 
     })
     test('Should present SuveryResult data on success', async () => {
+        const loadSurveyResultSpy = new LoadSurveyResultSpy()
         const surveyResult = Object.assign(mockSurveyResultModel(), {
             date: new Date('2020-01-10T00:00:00')
         })
-        makeSut(surveyResult)
+        loadSurveyResultSpy.surveyResult = surveyResult
+        makeSut(loadSurveyResultSpy)
         await waitFor(() => screen.getByTestId('survey-result'))
         expect(screen.getByTestId('day')).toHaveTextContent('10')
         expect(screen.getByTestId('month')).toHaveTextContent('jan')
@@ -53,8 +56,8 @@ describe('SurveyResult Component', () => {
         //expect(answersWrap[1]).not.toHaveClass('active')
         const images = screen.queryAllByAltText('image')
         //expect(images[0]).toHaveAttribute('src', surveyResult.answers[0].image) // falta eu ter as imagens  pro test passar
-        //expect(images[0]).toHaveAttribute('alt', surveyResult.answers[0].answer)
-        //expect(images[1]).toBeFalsy()
+        //xpect(images[0]).toHaveAttribute('alt', surveyResult.answers[0].answer)
+        expect(images[1]).toBeFalsy()
         const answers = screen.queryAllByAltText('answer')
         //xpect(answers[0]).toHaveTextContent(surveyResult.answers[0].answer) //falta a api para esses testes funcionarem
         //expect(answers[1]).toHaveTextContent(surveyResult.answers[1].answer)
@@ -62,4 +65,16 @@ describe('SurveyResult Component', () => {
         //expect(percents[0]).toHaveTextContent(`${surveyResult.answers[0].percent}%`) //falta a api para esses testes funcionarem
         //expect(percents[1]).toHaveTextContent(`${surveyResult.answers[1].percent}%`)
     })
+
+
+    test('Should render error on UnexpectedError', async () => {
+        const loadSurveyResultSpy = new LoadSurveyResultSpy()
+        const error = new UnexpectedError()
+        jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(error)
+        makeSut(loadSurveyResultSpy)
+        await waitFor(() => screen.getByTestId('survey-result'))
+        expect(screen.queryByTestId('question')).not.toBeInTheDocument()
+        expect(screen.getByTestId('error')).toHaveTextContent(error.message)
+        expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+      })
 });
