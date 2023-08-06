@@ -6,7 +6,7 @@ describe('Private Routes', () => {
     testUrl('/login')
   })
 
-  it('Should logout if survey-resul has no token', () => {
+  it('Should logout if survey-result has no token', () => {
     cy.visit('/login') //valor colocado no curso dentro do cy.visit ('/surveys/any_id')
     testUrl('/login')
   })

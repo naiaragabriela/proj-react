@@ -28,16 +28,11 @@ export const mockEmailInUseError = (url: RegExp,): void => {
 }
 
 export const mockUnexpectedError = (url: RegExp, method: string): void => {
-    cy.intercept({
-        method,
-        url,
-        /*
-        status: faker.helpers.randomize([400, 401, 500]),
-        response: {
-            error: faker.random.words()
-        }
-        */
-    }).as('request')
+    cy.intercept('POST', url, {
+        statusCode: 500,
+      }).as('request')
+      
+    // cy.intercept(method, '', {statusCode: 500}).as('request')
 }
 
 
