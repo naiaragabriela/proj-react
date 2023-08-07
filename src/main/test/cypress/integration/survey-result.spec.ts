@@ -32,6 +32,25 @@ describe('SurveyResult', () => {
 
   it('Should logout on AccessDeniederror', () => {
     mockAccessDeniedError()
-    testUrl('/login')//no curso aqui usa o /login
+    testUrl('/login')
+  })
+
+  it('Should present survey result', () => {
+    mockSucess()
+    cy.request('/surveys')
+    //cy.getByTestId('question').should('have.text', 'Question')
+    //cy.getByTestId('day').should('have.text', '03') 
+    //cy.getByTestId('month').should('have.text', 'fev') 
+    //cy.getByTestId('year').should('have.text', '2018') 
+    cy.get('li:nth-child(1)').then(li => { 
+      assert.equal(li.find('[data-testid="answer"]').text(), '')//no curso está com any_answer dentro das ''
+      assert.equal(li.find('[data-testid="percent"]').text(), '')//no curso está com 70% dentro das ''
+      assert.equal(li.find('[data-testid="image"]').attr('src'), undefined)//no curso está com 'any_image' no lugar de undefined
+    }) 
+    cy.get('li:nth-child(1)').then(li => { 
+      assert.equal(li.find('[data-testid="answer"]').text(), '')//no curso tá any_answer_2 dentro das ''
+      assert.equal(li.find('[data-testid="percent"]').text(), '')//no curso tá 30% dentro das ''
+      assert.notExists(li.find('[data-testid="image"]'))
+    })
   })
 })
