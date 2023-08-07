@@ -47,7 +47,7 @@ describe('Login', () => {
   it('Should present InvalidCredentialsError on 401', () => {
     Http.mockInvalidCredentialsError()
     simulateValidSubmit()
-    testMainError('Algo de errado aconteceu. Tente novamente em breve')
+    testMainError('Credenciais inválidas')
     testUrl('/login')
   })
 
