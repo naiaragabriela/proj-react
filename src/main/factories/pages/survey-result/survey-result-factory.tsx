@@ -4,7 +4,10 @@ import { useParams } from 'react-router-dom'
 import React from 'react'
 
 export const makeSurveyResult: React.FC = () => {
-  const { id } = useParams<{ id: string }>()
+  type Props = {
+    id: string
+  }
+  const { id } = useParams<Props>()
   return (
     <SurveyResult 
     loadSurveyResult={makeRemoteLoadSurveyResult(id)} 

@@ -1,13 +1,14 @@
-import React from 'react'
+import { ApiContext } from '../../contexts'
+import { Login } from '../../pages'
+import { Authentication } from '../../../domain/usecases'
+import { ValidationStub, AuthenticationSpy, Helper } from '../../test'
+import { InvalidCredentialsError } from '../../../domain/errors'
 import { Router } from 'react-router-dom'
 import {createMemoryHistory} from 'history'
 import faker from 'faker'
-import { ApiContext } from '../../contexts'
-import { Login } from '../../pages'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
-import { ValidationStub, AuthenticationSpy, Helper } from '../../test'
-import { InvalidCredentialsError } from '../../../domain/errors'
-import { Authentication } from '../../../domain/usecases'
+import { RecoilRoot } from 'recoil'
+import React from 'react'
 
 
 type SutTypes = {
@@ -27,7 +28,8 @@ const makeSut = (params?: SutParams): SutTypes => {
   const authenticationSpy = new AuthenticationSpy()
   const setCurrentAccountMock = jest.fn()
   render(
-  <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+  <RecoilRoot>
+    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
     <Router history={history}>
       <Login 
       validation={validationStub} 
@@ -35,6 +37,8 @@ const makeSut = (params?: SutParams): SutTypes => {
       />
     </Router>
   </ApiContext.Provider>
+  </RecoilRoot>
+
  
   )
   return{

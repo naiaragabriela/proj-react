@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { Link, useHistory } from 'react-router-dom'
 import Styles from './signup-styles.scss'
-import { Footer, LoginHeader, Input, FormStatus, SubmitButton } from '@/presentation/components'
-import Context from '@/presentation/contexts/form/form-context'
+import { signUpState, Input, SubmitButton, FormStatus } from './components'
+import { Footer, LoginHeader } from '@/presentation/components'
 import { ApiContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
 import { AddAccount } from '@/domain/usecases'
+import { useRecoilState } from 'recoil'
+import { Link, useHistory } from 'react-router-dom'
+import React, { useEffect, useContext } from 'react'
 
 type Props = {
   validation: Validation
@@ -16,19 +17,7 @@ type Props = {
 const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
   const {setCurrentAccount} = useContext(ApiContext)
   const history = useHistory()
-  const [state, setState] = useState({
-    isLoading: false,
-    isFormInvalid: true,
-    name: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-    nameError: '',
-    emailError: '',
-    passwordError: '',
-    passwordConfirmationError: '',
-    mainError: ''
-  })
+  const [state, setState] = useRecoilState(signUpState)
   useEffect(() => {
     const { name, email, password, passwordConfirmation } = state
     const formData = { name, email, password, passwordConfirmation }
@@ -74,7 +63,6 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
   return (
     <div className={Styles.signupWrap}>
       <LoginHeader />
-      <Context.Provider value={{ state, setState }}>
         <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
           <h2>Criar Conta</h2>
           <Input type="text" name="name" placeholder="Digite seu nome"/>
@@ -85,7 +73,6 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
           <Link data-testid="login-link" replace to="/login" className={Styles.link}>Voltar para Login</Link>
           <FormStatus />
         </form>
-      </Context.Provider>
       <Footer />
     </div>
   )
