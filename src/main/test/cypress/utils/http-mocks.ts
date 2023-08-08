@@ -8,7 +8,7 @@ export const mockUnauthorizedError = (url: RegExp, response: any): void => {
 }
 
 export const mockForbiddenError = (url: RegExp): void => {
-    cy.intercept('GET' || 'POST', url, {
+    cy.intercept('GET' || 'POST' || 'PUT', url, {
         statusCode: 403,
       }).as('request');
 }

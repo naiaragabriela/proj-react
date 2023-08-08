@@ -78,5 +78,12 @@ describe('SurveyResult', () => {
       cy.get('li:nth-child(2)').click()
       //cy.getByTestId('error').should('contain.text', '')
     })
+
+    it('Should logout on AccessDeniederror', () => {
+      const mockAccessDeniedError = (): void => Http.mockForbiddenError(path)
+      mockAccessDeniedError()
+      cy.get('li:nth-child(2)').click()
+      testUrl('/') //no curso está como /login
+    })
   })
 })
