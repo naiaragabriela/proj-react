@@ -6,6 +6,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryHistory, createMemoryHistory } from 'history'
 import { AccountModel } from '../../../domain/models';
 import { Router } from 'react-router-dom';
+import { RecoilRoot } from 'recoil'
 import React from 'react'
 
 type SutTypes = {
@@ -32,6 +33,7 @@ const makeSut = ({
     const setCurrentAccountMock = jest.fn()
     
     render(
+      <RecoilRoot>
         <ApiContext.Provider value={{ 
             setCurrentAccount: setCurrentAccountMock, 
             getCurrentAccount: () => mockAccountModel() 
@@ -43,6 +45,7 @@ const makeSut = ({
             />
           </Router>
         </ApiContext.Provider>
+      </RecoilRoot>
     )
     return {
         loadSurveyResultSpy,
@@ -214,6 +217,7 @@ describe('SurveyResult Component', () => {
       await waitFor(() => screen.getByTestId('survey-result'))
       const answersWrap = screen.queryAllByAltText('answer-wrap') //pega a lista de respostas e clica na primeira
       //fireEvent.click(answersWrap[1])
+      await waitFor(() => screen.getByTestId('survey-result'))
       //fireEvent.click(answersWrap[1])
       await waitFor(() => screen.getByTestId('survey-result'))
       expect(saveSurveyResultSpy.callsCount).toBe(0) //no curso fica 1
