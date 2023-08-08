@@ -14,7 +14,7 @@ export const mockForbiddenError = (url: RegExp): void => {
 }
 
 export const mockServerError = (url: RegExp): void => {
-    cy.intercept('GET' || 'POST', url, {
+    cy.intercept('GET' || 'POST' || 'PUT', url, {
         statusCode: 500,
       }).as('request')
 }
