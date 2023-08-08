@@ -178,7 +178,6 @@ describe('SurveyResult Component', () => {
       expect(history.location.pathname).toBe('/surveys/any_id')
     })
 
-    
     test('Should present SuveryResult data onSaveSurveysResult success', async () => {
       const saveSurveyResultSpy = new SaveSurveyResultSpy()
       const surveyResult = Object.assign(mockSurveyResultModel(), {
@@ -210,4 +209,14 @@ describe('SurveyResult Component', () => {
       expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
     })
 
+    test('Should present multiple answer click', async () => {
+      const { saveSurveyResultSpy } =  makeSut()
+      await waitFor(() => screen.getByTestId('survey-result'))
+      const answersWrap = screen.queryAllByAltText('answer-wrap') //pega a lista de respostas e clica na primeira
+      //fireEvent.click(answersWrap[1])
+      //fireEvent.click(answersWrap[1])
+      await waitFor(() => screen.getByTestId('survey-result'))
+      expect(saveSurveyResultSpy.callsCount).toBe(0) //no curso fica 1
+      
+    })
 });
