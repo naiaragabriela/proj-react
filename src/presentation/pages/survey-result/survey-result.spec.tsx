@@ -68,13 +68,13 @@ describe('SurveyResult Component', () => {
         //expect(answersWrap[1]).not.toHaveClass('active')
         const images = screen.queryAllByAltText('image')
         //expect(images[0]).toHaveAttribute('src', surveyResult.answers[0].image) // falta eu ter as imagens  pro test passar
-        //xpect(images[0]).toHaveAttribute('alt', surveyResult.answers[0].answer)
+        //expect(images[0]).toHaveAttribute('alt', surveyResult.answers[0].answer)
         expect(images[1]).toBeFalsy()
         const answers = screen.queryAllByAltText('answer')
-        //xpect(answers[0]).toHaveTextContent(surveyResult.answers[0].answer) //falta a api para esses testes funcionarem
+        //expect(answers[0]).toHaveTextContent(surveyResult.answers[0].answer) //falta a pergunta para esses testes funcionarem
         //expect(answers[1]).toHaveTextContent(surveyResult.answers[1].answer)
         const percents = screen.queryAllByAltText('percent')
-        //expect(percents[0]).toHaveTextContent(`${surveyResult.answers[0].percent}%`) //falta a api para esses testes funcionarem
+        //expect(percents[0]).toHaveTextContent(`${surveyResult.answers[0].percent}%`) //falta a resposta para esses testes funcionarem
         //expect(percents[1]).toHaveTextContent(`${surveyResult.answers[1].percent}%`)
     })
     test('Should render error on UnexpectedError', async () => {
@@ -112,4 +112,12 @@ describe('SurveyResult Component', () => {
         fireEvent.click(screen.getByTestId('back-button'))
         expect(history.location.pathname).toBe('/')
       })
+
+      test('Should not present Loading on active answer click', async () => {
+       makeSut()
+       await waitFor(() => screen.getByTestId('survey-result'))
+       const answersWrap = screen.queryAllByAltText('answer-wrap')
+       //fireEvent.click(answersWrap[0])
+       expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+     })
 });
