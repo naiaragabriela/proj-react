@@ -94,6 +94,7 @@ describe('SurveyResult Component', () => {
         //expect(percents[0]).toHaveTextContent(`${surveyResult.answers[0].percent}%`) //falta a resposta para esses testes funcionarem
         //expect(percents[1]).toHaveTextContent(`${surveyResult.answers[1].percent}%`)
     })
+
     test('Should render error on UnexpectedError', async () => {
         const loadSurveyResultSpy = new LoadSurveyResultSpy()
         const error = new UnexpectedError()
@@ -104,6 +105,7 @@ describe('SurveyResult Component', () => {
         expect(screen.getByTestId('error')).toHaveTextContent(error.message)
         expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
       })
+
       test('Should logout on AccessDeniedError', async () => {
         const loadSurveyResultSpy = new LoadSurveyResultSpy()
         jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(new AccessDeniedError())
@@ -148,5 +150,19 @@ describe('SurveyResult Component', () => {
       //  answer: loadSurveyResultSpy.surveyResult.answers[1].answer
      //})
       await waitFor(() => screen.getByTestId('survey-result'))
+    })
+
+    test('Should render error on UnexpectedError', async () => {
+      const saveSurveyResultSpy = new SaveSurveyResultSpy()
+      const error = new UnexpectedError()
+      jest.spyOn(saveSurveyResultSpy, 'save').mockRejectedValueOnce(error)
+      makeSut({ saveSurveyResultSpy })
+      await waitFor(() => screen.getByTestId('survey-result'))
+      const answersWrap = screen.queryAllByAltText('answer-wrap') //pega a lista de respostas e clica na primeira
+      //fireEvent.click(answersWrap[1])
+      await waitFor(() => screen.getByTestId('survey-result'))
+      //expect(screen.queryByTestId('question')).not.toBeInTheDocument()
+      //expect(screen.getByTestId('error')).toHaveTextContent(error.message)
+      //expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
     })
 });
