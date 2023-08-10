@@ -1,5 +1,5 @@
 import { SurveyList } from '../../pages'
-import { ApiContext } from '../../contexts'
+import { currentAccountState } from '../../../presentation/components'
 import { mockAccountModel } from '../../../domain/test'
 import { AccountModel } from '../../../domain/models'
 import { LoadSurveyListSpy } from '../../../domain/test/mock-survey-list'
@@ -20,18 +20,13 @@ type SutTypes = {
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
     const history = createMemoryHistory({ initialEntries: ['/'] })
     const setCurrentAccountMock = jest.fn()
+    const mockedState = { setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => mockAccountModel() }
     render(
-      <RecoilRoot>
-        <ApiContext.Provider value={{ 
-          setCurrentAccount: setCurrentAccountMock, 
-          getCurrentAccount: () => mockAccountModel() 
-        }}>
+      <RecoilRoot initializeState={({ set }) => set(currentAccountState, mockedState) }>
         <Router history={history}>
           <SurveyList loadSurveyList={loadSurveyListSpy} />
         </Router>
-        </ApiContext.Provider>
       </RecoilRoot>
-     
     )
     return {
       loadSurveyListSpy,

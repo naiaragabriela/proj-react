@@ -1,21 +1,19 @@
 import Styles from './signup-styles.scss'
 import { signUpState, Input, SubmitButton, FormStatus } from './components'
-import { Footer, LoginHeader } from '@/presentation/components'
-import { ApiContext } from '@/presentation/contexts'
+import { Footer, LoginHeader, currentAccountState } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols/validation'
 import { AddAccount } from '@/domain/usecases'
-import { useRecoilState } from 'recoil'
 import { Link, useHistory } from 'react-router-dom'
-import React, { useEffect, useContext } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import React, { useEffect } from 'react'
 
 type Props = {
   validation: Validation
   addAccount: AddAccount
 }
 
-
 const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
-  const {setCurrentAccount} = useContext(ApiContext)
+  const {setCurrentAccount} = useRecoilValue(currentAccountState)
   const history = useHistory()
   const [state, setState] = useRecoilState(signUpState)
   useEffect(() => {

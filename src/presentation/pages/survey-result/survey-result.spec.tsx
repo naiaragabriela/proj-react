@@ -1,11 +1,11 @@
-import SurveyResult from './survey-result';
-import { ApiContext } from '../../contexts'
+import SurveyResult from './survey-result'
+import { currentAccountState } from '../../../presentation/components'
 import { LoadSurveyResultSpy, SaveSurveyResultSpy, mockAccountModel, mockSurveyResultModel } from '../../../domain/test'
-import { AccessDeniedError, UnexpectedError } from '../../../domain/errors';
+import { AccessDeniedError, UnexpectedError } from '../../../domain/errors'
+import { AccountModel } from '../../../domain/models'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryHistory, createMemoryHistory } from 'history'
-import { AccountModel } from '../../../domain/models';
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import React from 'react'
 
@@ -31,20 +31,17 @@ const makeSut = ({
     })
 
     const setCurrentAccountMock = jest.fn()
+
+    const mockedState = { setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => mockAccountModel() }
     
     render(
-      <RecoilRoot>
-        <ApiContext.Provider value={{ 
-            setCurrentAccount: setCurrentAccountMock, 
-            getCurrentAccount: () => mockAccountModel() 
-        }}>
+      <RecoilRoot initializeState={({ set }) => set(currentAccountState, mockedState) }>
           <Router history={history}>
             <SurveyResult 
-            loadSurveyResult={loadSurveyResultSpy}
-            saveSurveyResult={saveSurveyResultSpy}  
+              loadSurveyResult={loadSurveyResultSpy}
+              saveSurveyResult={saveSurveyResultSpy}  
             />
           </Router>
-        </ApiContext.Provider>
       </RecoilRoot>
     )
     return {

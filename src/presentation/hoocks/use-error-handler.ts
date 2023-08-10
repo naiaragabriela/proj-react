@@ -1,7 +1,4 @@
-import { ApiContext } from "../contexts"
 import { AccessDeniedError } from "@/domain/errors"
-import { useContext } from "react"
-import { useHistory } from "react-router-dom"
 import { useLogout } from "./use-logout"
 
 type CallBackType = (error: Error) => void
