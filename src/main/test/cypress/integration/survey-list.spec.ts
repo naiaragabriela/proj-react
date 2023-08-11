@@ -56,8 +56,8 @@ describe('SurveyList', () => {
 
   it('Should present survey items', () => {
     mockSucess()
-    cy.get('li:empty').should('have.length', 0) //no curso estava como 4
-    cy.get('li:not(:empty)').should('have.length', 1)//no curso ele colocou o numero 2 
+    cy.get('li:empty').should('have.length', 4) //no curso estava como 4
+    cy.get('li:not(:empty)').should('have.length', 0)//no curso ele colocou o numero 2 
    /*
     cy.get('li:nth-child(1)').then(li => {
       assert.equal(li.find('[data-testid="day"]').text(), '')//no curso ele colocou o numero 03

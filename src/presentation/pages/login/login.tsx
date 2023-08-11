@@ -4,7 +4,7 @@ import { Footer, LoginHeader, currentAccountState } from '@/presentation/compone
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication } from '@/domain/usecases'
 import { Link, useHistory } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import React, { useEffect } from 'react'
 
 type Props = {
@@ -13,23 +13,22 @@ type Props = {
 }
 
 const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+    const resetLoginState = useResetRecoilState(loginState)
     const {setCurrentAccount} = useRecoilValue(currentAccountState)
     const history = useHistory()
     const [state, setState] = useRecoilState(loginState)
-    useEffect(() => {
-      const {  email, password } = state
+
+    useEffect(() => resetLoginState(), [])
+    useEffect(() => validate('email'), [state.email])
+    useEffect(() => validate('password'), [state.password])
+
+    const validate =( field: string): void => {
+      const { email, password } = state 
       const formData = { email, password }
-      const emailError= validation.validate('email', formData)
-      const passwordError= validation.validate('password', formData)
-
-      setState({
-        ...state,
-        emailError,
-        passwordError,
-        isFormInvalid: !!emailError || !!passwordError 
-      })
-    }, [state.email, state.password])
-
+      setState(old => ({...old, [`${field}Error`]: validation.validate(field, formData) }))
+      setState(old =>({...old, isFormInvalid: !!old.emailError || !!old.passwordError }))
+    }
+ 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault()
       try{
